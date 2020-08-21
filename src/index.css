@@ -18,10 +18,20 @@ body {
     background-color: #f6f8fa;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
     border-right-style: solid;
     border-right-color: #e1e4e8;
     border-right-width: 1.5px;
+}
+
+.listPrev {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createNote {
+
 }
 
 .focusNote {

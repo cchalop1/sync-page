@@ -4,49 +4,34 @@ import { ListNotes } from './ListNotes';
 import { FocusNote } from './FocusNote';
 import { Option } from './Option';
 
-let data = {
-    notes: [
-        {
-            uuid: '1',
-            title: 'bonjour tout le monde',
-            content: 'content bonjour kj    wenljewqjnf',
-            delete: false,
-            focus: false
-        },
-        {
-            uuid: '2',
-            title: 'list de course',
-            content: 'toto\ntata\n',
-            delete: false,
-            focus: false
-        },
-        {
-            uuid: '3',
-            title: 'chose a faire',
-            content: 'faire les course',
-            delete: false,
-            focus: false
-        },
-        {
-            uuid: '4',
-            title: 'bonjour tout le monde',
-            content: 'very big content forlkewqnfekjwqnlkeewkjne wljejwn nfw qjnekjwnqlk newqnfe lknlje nwqkj nfwqjknlk jnewqnekfwjqnkjewnqljwqnlkfew nkejnkwq jnkjfe jfenwkj nefkjnwq nkewqn kfejnk nfekjewqnf lkjneflkwq newqn one note just for test notes overflow display on j;lewqnlkjfwqlkfjewq nejwq nlkfjnwq lkjnfewq lknfe nwqkjnfewqkj nfkjenwq kjnfekwqljn flkjenwqk jnkewqj',
-            delete: false,
-            focus: false
-        },
-    ]
+const getDataLocalStorage = () => {
+    if (localStorage.getItem('data')) {
+        return JSON.parse(localStorage.getItem('data'));
+    }
+    localStorage.setItem('data', JSON.stringify({ notes: [] }));
+    return ({ notes: [] });
 };
 
-localStorage.setItem('data', JSON.stringify(data));
+let data = getDataLocalStorage();
+
 
 const App = () => {
     const [noteFocus, setNoteFocus] = useState(undefined);
 
     const updateNote = (newNotes) => data.notes = newNotes;
 
+    const createNewNote = (newNote) => {
+        data.notes.push(newNote);
+        localStorage.setItem('data', JSON.stringify(data));
+    };
+
     return (
         <div className="main">
-            <ListNotes data={data} setNoteFocus={setNoteFocus}></ListNotes>
+            <ListNotes
+                data={data}
+                setNoteFocus={setNoteFocus}
+                createNewNote={createNewNote}>
+            </ListNotes>
             <FocusNote
                 data={data}
                 noteFocus={noteFocus}
