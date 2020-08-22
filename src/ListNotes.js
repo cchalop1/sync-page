@@ -14,6 +14,7 @@ export const ListNotes = (props) => {
                     >
                         <h1>{note.title}</h1>
                         <p>{note.content}</p>
+                        <button onClick={() => props.delNote(note)}>X</button>
                     </div>);
                 })}
 
@@ -28,6 +29,7 @@ export const ListNotes = (props) => {
                 };
                 props.setNoteFocus(newNote);
                 props.createNewNote(newNote);
+                props.refTitle.current.focus();
             }}>Create Note</button>
         </div>
     );

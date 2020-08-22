@@ -5,6 +5,7 @@ export const FocusNote = (props) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
+
     useEffect(() => {
         if (props.noteFocus) {
             setTitle(props.noteFocus.title);
@@ -27,6 +28,9 @@ export const FocusNote = (props) => {
                 }
                 return el;
             }));
+            props.setData(props.data);
+
+            localStorage.setItem('data', JSON.stringify(props.data));
         }
     };
 
@@ -36,6 +40,7 @@ export const FocusNote = (props) => {
                 type="text"
                 className="title"
                 value={title}
+                ref={props.refTitle}
                 onChange={(e) => updateNote(e.target.value, content)}>
             </input>
             <textarea

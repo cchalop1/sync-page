@@ -12,17 +12,26 @@ const getDataLocalStorage = () => {
     return ({ notes: [] });
 };
 
-let data = getDataLocalStorage();
-
-
 const App = () => {
     const [noteFocus, setNoteFocus] = useState(undefined);
+    const [data, setData] = useState(getDataLocalStorage());
+    const refTitle = React.createRef();
 
     const updateNote = (newNotes) => data.notes = newNotes;
 
     const createNewNote = (newNote) => {
-        data.notes.push(newNote);
+        let cpyData = data;
+        cpyData.notes.push(newNote);
+        setData(cpyData);
+        localStorage.setItem('data', JSON.stringify(cpyData));
+    };
+
+    const delNote = (note) => {
+        let cpyData = data;
+        cpyData.notes = data.notes.filter(nt => nt.uuid !== note.uuid);
+        setData(cpyData);
         localStorage.setItem('data', JSON.stringify(data));
+        setNoteFocus(undefined);
     };
 
     return (
@@ -30,13 +39,17 @@ const App = () => {
             <ListNotes
                 data={data}
                 setNoteFocus={setNoteFocus}
-                createNewNote={createNewNote}>
+                createNewNote={createNewNote}
+                delNote={delNote}
+                refTitle={refTitle}>
             </ListNotes>
             <FocusNote
                 data={data}
                 noteFocus={noteFocus}
+                setData={setData}
                 updateNote={updateNote}
-                setNoteFocus={setNoteFocus}>
+                setNoteFocus={setNoteFocus}
+                refTitle={refTitle}>
             </FocusNote>
             <Option></Option>
         </div>

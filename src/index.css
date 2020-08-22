@@ -87,3 +87,8 @@ body {
     resize: none;
     padding: 10px;
 }
+
+.qcode {
+    height: 90%;
+    width: 90%;
+}
